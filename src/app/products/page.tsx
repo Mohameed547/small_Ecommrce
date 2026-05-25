@@ -14,15 +14,21 @@ import {
   Box
 } from '@mui/material'
 
+type Product = {
+  _id: string
+  title: string
+  description: string
+  price: number
+  imageCover: string
+}
+
 export default function ProductsPage() {
 
-  const [products, setProducts] = useState([])
+  const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
 
   async function getProducts() {
-
     try {
-
       const { data } = await axios.get(
         'https://ecommerce.routemisr.com/api/v1/products'
       )
@@ -30,13 +36,9 @@ export default function ProductsPage() {
       setProducts(data.data)
 
     } catch (error) {
-
       console.log(error)
-
     } finally {
-
       setLoading(false)
-
     }
   }
 
@@ -45,49 +47,24 @@ export default function ProductsPage() {
   }, [])
 
   if (loading) {
-
     return (
-
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          mt: 5
-        }}
-      >
+      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
         <CircularProgress />
       </Box>
-
     )
   }
 
   return (
-
     <Container sx={{ mt: 5 }}>
 
-      <Typography
-        variant="h3"
-        sx={{
-          textAlign: 'center',
-          mb: 5
-        }}
-      >
+      <Typography variant="h3" sx={{ textAlign: 'center', mb: 5 }}>
         Products
       </Typography>
 
       <Grid container spacing={4}>
 
         {products.map((product) => (
-
-          <Grid
-            key={product._id}
-            size={{
-              xs: 12,
-              sm: 6,
-              md: 4,
-              lg: 3
-            }}
-          >
+          <Grid key={product._id} item xs={12} sm={6} md={4} lg={3}>
 
             <Card sx={{ height: '100%' }}>
 
@@ -100,36 +77,16 @@ export default function ProductsPage() {
 
               <CardContent>
 
-                <Typography
-                  variant="h6"
-                  sx={{
-                    mb: 2,
-                    minHeight: 60
-                  }}
-                >
+                <Typography variant="h6" sx={{ mb: 2, minHeight: 60 }}>
                   {product.title}
                 </Typography>
 
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  sx={{ mb: 2 }}
-                >
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
                   {product.description.slice(0, 70)}...
                 </Typography>
 
-                <Typography
-                  variant="h6"
-                  color="success.main"
-                >
-                  {product.price} 
-                </Typography>
-
-                <Typography
-                  variant="body2"
-                  sx={{ mt: 1 }}
-                >
-
+                <Typography variant="h6" color="success.main">
+                  {product.price} EGP
                 </Typography>
 
               </CardContent>
@@ -137,7 +94,6 @@ export default function ProductsPage() {
             </Card>
 
           </Grid>
-
         ))}
 
       </Grid>
