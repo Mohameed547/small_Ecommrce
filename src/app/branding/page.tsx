@@ -15,8 +15,15 @@ import {
 } from '@mui/material'
 
 export default function BrandsPage() {
+    type Brand = {
+  _id: string
+  name: string
+  image: string
+}
 
-  const [brands, setBrands] = useState([])
+const [brands, setBrands] = useState<Brand[]>([])
+
+//   const [brands, setBrands] = useState([])
   const [loading, setLoading] = useState(true)
 
   async function getBrands() {
